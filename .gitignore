@@ -29,6 +29,9 @@
 # local VScode support
 .vscode/
 
+# Mac DS_Store
+.DS_Store
+
 # Gradle cache directory
 .gradle/
 
