@@ -3,24 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class QuestController : MonoBehaviour
+public class NPC : MonoBehaviour
 {
     public GameObject instructions;
     public TextMeshProUGUI instructionsText;
+    public Dialogue dialogue;
 
     private bool triggerActive = false;
-    private bool conversationActive = false;
+    private bool dialogueStarted = false;
 
     private void Update()
     {
         // Check for input when the trigger is active
         if (triggerActive)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && !dialogueStarted)
             {
+                // Start the dialogue
                 instructions.SetActive(false);
-                conversationActive = true; // Start the conversation when E is pressed
-                Debug.Log("Conversation started with " + gameObject.name);
+                FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+                dialogueStarted = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.E) && dialogueStarted)
+            {
+                // Display the next sentence
+                FindObjectOfType<DialogueManager>().DisplayNextSentence();
             }
         }
     }
@@ -32,7 +39,7 @@ public class QuestController : MonoBehaviour
             if (gameObject.tag == "NPC")
             {
                 // Only show the instructions if the player is close enough to the NPC and a conversation is not already active
-                if (!conversationActive)
+                if (!dialogueStarted)
                 {
                     instructionsText.text = "Press \"E\" to talk to " + gameObject.name;
                     instructions.SetActive(true);
@@ -48,7 +55,12 @@ public class QuestController : MonoBehaviour
         {
             instructions.SetActive(false);
             triggerActive = false;
-            conversationActive = false;
         }
+    }
+
+    public void StartDialogue()
+    {
+        FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+        dialogueStarted = true;
     }
 }
