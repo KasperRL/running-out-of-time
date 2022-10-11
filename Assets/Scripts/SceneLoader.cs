@@ -13,28 +13,38 @@ public class SceneLoader : MonoBehaviour
     public TextMeshProUGUI instructionsText;
     public int sceneIndex;
 
+    private bool triggerActive = false;
+
     private string sceneName;
 
-    public void Awake()
+    private void Awake()
     {
         string scenePath = SceneUtility.GetScenePathByBuildIndex(sceneIndex);
         sceneName = scenePath.Substring(0, scenePath.Length - 6).Substring(scenePath.LastIndexOf('/') + 1);
     }
 
-    public void OnTriggerStay()
+    private void Update()
     {
-        instructionsText.text = "Press \"E\" to travel to \"" + sceneName + "\"";
-        instructions.SetActive(true);
-
-        if (Input.GetKeyDown(KeyCode.E))
+        if (triggerActive)
         {
-            StartCoroutine(LoadScene(sceneIndex));
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                StartCoroutine(LoadScene(sceneIndex));
+            }
         }
     }
 
-    public void OnTriggerExit()
+    private void OnTriggerStay()
+    {
+        instructionsText.text = "Press \"E\" to travel to \"" + sceneName + "\"";
+        instructions.SetActive(true);
+        triggerActive = true;
+    }
+
+    private void OnTriggerExit()
     {
         instructions.SetActive(false);
+        triggerActive = false;
     }
 
     // Load scene asynchronously and display progress on loading screen

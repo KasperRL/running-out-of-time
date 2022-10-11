@@ -11,7 +11,7 @@ public class QuestController : MonoBehaviour
     private bool triggerActive = false;
     private bool conversationActive = false;
 
-    public void Update()
+    private void Update()
     {
         if (triggerActive)
         {
@@ -24,7 +24,7 @@ public class QuestController : MonoBehaviour
         }
     }
 
-    public void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
@@ -40,7 +40,7 @@ public class QuestController : MonoBehaviour
         }
     }
 
-    public void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
