@@ -1561,6 +1561,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 725068955a5274bbfa4f045911d698f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameText: {fileID: 1610265783}
+  dialogueText: {fileID: 543955229}
+  dialogueBox: {fileID: 193522291}
 --- !u!4 &381996374
 Transform:
   m_ObjectHideFlags: 0
@@ -2089,7 +2092,7 @@ GameObject:
   - component: {fileID: 543955230}
   - component: {fileID: 543955229}
   m_Layer: 5
-  m_Name: Instruction Text
+  m_Name: Dialogue Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
