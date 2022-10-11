@@ -19,17 +19,19 @@ public class SceneLoader : MonoBehaviour
 
     private void Awake()
     {
-        string scenePath = SceneUtility.GetScenePathByBuildIndex(sceneIndex);
-        sceneName = scenePath.Substring(0, scenePath.Length - 6).Substring(scenePath.LastIndexOf('/') + 1);
+        // Unity GetSceneByBuildIndex() is bugged, so I had to use this workaround
+        string scenePath = SceneUtility.GetScenePathByBuildIndex(sceneIndex); // Get the path of the scene
+        sceneName = scenePath.Substring(0, scenePath.Length - 6).Substring(scenePath.LastIndexOf('/') + 1); // Get the name of the scene from the path
     }
 
     private void Update()
     {
+        // Check for input when the trigger is active
         if (triggerActive)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                StartCoroutine(LoadScene(sceneIndex));
+                StartCoroutine(LoadScene(sceneIndex)); // Load the scene when E is pressed
             }
         }
     }

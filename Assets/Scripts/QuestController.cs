@@ -13,12 +13,13 @@ public class QuestController : MonoBehaviour
 
     private void Update()
     {
+        // Check for input when the trigger is active
         if (triggerActive)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
                 instructions.SetActive(false);
-                conversationActive = true;
+                conversationActive = true; // Start the conversation when E is pressed
                 Debug.Log("Conversation started with " + gameObject.name);
             }
         }
@@ -30,6 +31,7 @@ public class QuestController : MonoBehaviour
         {
             if (gameObject.tag == "NPC")
             {
+                // Only show the instructions if the player is close enough to the NPC and a conversation is not already active
                 if (!conversationActive)
                 {
                     instructionsText.text = "Press \"E\" to talk to " + gameObject.name;
