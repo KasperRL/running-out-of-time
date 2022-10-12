@@ -8,6 +8,7 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
     public GameObject dialogueBox;
+    public bool dialogueActive = false;
     
     private Queue<string> sentences;
     
@@ -20,6 +21,7 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Dialogue dialogue)
     {
         Debug.Log("Starting conversation with " + dialogue.name);
+        dialogueActive = true;
 
         dialogueBox.SetActive(true);
 
@@ -62,7 +64,8 @@ public class DialogueManager : MonoBehaviour
     {
         Debug.Log("End of conversation.");
         dialogueBox.SetActive(false);
-        FindObjectOfType<NPC>().dialogueStarted = false;
+        dialogueActive = false;
+        
         FindObjectOfType<QuestManager>().currentQuest = "Refuel the rocket";
     }
 }

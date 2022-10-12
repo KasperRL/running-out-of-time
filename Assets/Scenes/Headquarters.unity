@@ -1564,6 +1564,7 @@ MonoBehaviour:
   nameText: {fileID: 1610265783}
   dialogueText: {fileID: 543955229}
   dialogueBox: {fileID: 193522291}
+  dialogueActive: 0
 --- !u!4 &381996374
 Transform:
   m_ObjectHideFlags: 0
@@ -2107,7 +2108,6 @@ MonoBehaviour:
       we can launch in time.
     - Report to your sergeant after you're done with refueling for further instructions.
     - Remember, you're on a timer. Get going!
-  dialogueStarted: 0
 --- !u!65 &524851136
 BoxCollider:
   m_ObjectHideFlags: 0

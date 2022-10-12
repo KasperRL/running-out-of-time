@@ -8,7 +8,6 @@ public class NPC : MonoBehaviour
     public GameObject instructions;
     public TextMeshProUGUI instructionsText;
     public Dialogue dialogue;
-    public bool dialogueStarted = false;
 
     private bool triggerActive = false;
     private DialogueManager dialogueManager;
@@ -23,14 +22,14 @@ public class NPC : MonoBehaviour
         // Check for input when the trigger is active
         if (triggerActive)
         {
-            if (Input.GetKeyDown(KeyCode.E) && !dialogueStarted)
+            if (Input.GetKeyDown(KeyCode.E) && !dialogueManager.dialogueActive)
             {
                 // Start the dialogue
                 instructions.SetActive(false);
                 FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
-                dialogueStarted = true;
+                dialogueManager.dialogueActive = true;
             }
-            else if (Input.GetKeyDown(KeyCode.E) && dialogueStarted)
+            else if (Input.GetKeyDown(KeyCode.E) && dialogueManager.dialogueActive)
             {
                 // Display the next sentence
                 FindObjectOfType<DialogueManager>().DisplayNextSentence();
@@ -45,7 +44,7 @@ public class NPC : MonoBehaviour
             if (gameObject.tag == "NPC")
             {
                 // Only show the instructions if the player is close enough to the NPC and a conversation is not already active
-                if (!dialogueStarted)
+                if (!dialogueManager.dialogueActive)
                 {
                     instructionsText.text = "Press \"E\" to talk to " + gameObject.name;
                     instructions.SetActive(true);
@@ -62,13 +61,13 @@ public class NPC : MonoBehaviour
             instructions.SetActive(false);
             dialogueManager.dialogueBox.SetActive(false);
             triggerActive = false;
-            dialogueStarted = false;
+            dialogueManager.dialogueActive = false;
         }
     }
 
     public void StartDialogue()
     {
         dialogueManager.StartDialogue(dialogue);
-        dialogueStarted = true;
+        dialogueManager.dialogueActive = true;
     }
 }
