@@ -8,9 +8,15 @@ public class NPC : MonoBehaviour
     public GameObject instructions;
     public TextMeshProUGUI instructionsText;
     public Dialogue dialogue;
+    public bool dialogueStarted = false;
 
     private bool triggerActive = false;
-    private bool dialogueStarted = false;
+    private DialogueManager dialogueManager;
+
+    void Start()
+    {
+        dialogueManager = FindObjectOfType<DialogueManager>();
+    }
 
     private void Update()
     {
@@ -32,7 +38,7 @@ public class NPC : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
@@ -54,13 +60,15 @@ public class NPC : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             instructions.SetActive(false);
+            dialogueManager.dialogueBox.SetActive(false);
             triggerActive = false;
+            dialogueStarted = false;
         }
     }
 
     public void StartDialogue()
     {
-        FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+        dialogueManager.StartDialogue(dialogue);
         dialogueStarted = true;
     }
 }

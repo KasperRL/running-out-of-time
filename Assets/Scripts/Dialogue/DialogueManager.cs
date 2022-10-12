@@ -43,12 +43,26 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
+        StopAllCoroutines();
         string sentence = sentences.Dequeue();
-        dialogueText.text = sentence;
+        StartCoroutine(TypeSentence(sentence));
+    }
+
+    IEnumerator TypeSentence(string sentence)
+    {
+        dialogueText.text = "";
+        foreach (char letter in sentence.ToCharArray())
+        {
+            dialogueText.text += letter;
+            yield return null;
+        }
     }
 
     void EndDialogue()
     {
         Debug.Log("End of conversation.");
+        dialogueBox.SetActive(false);
+        FindObjectOfType<NPC>().dialogueStarted = false;
+        FindObjectOfType<QuestManager>().currentQuest = "Refuel the rocket";
     }
 }

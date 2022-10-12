@@ -7802,7 +7802,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1694848149411730, guid: dffe57e4e8411e8429b0c5c20a5892d6, type: 3}
       propertyPath: m_Name
-      value: Rocket23_Red
+      value: Rocket
       objectReference: {fileID: 0}
     - target: {fileID: 4945958155193820, guid: dffe57e4e8411e8429b0c5c20a5892d6, type: 3}
       propertyPath: m_RootOrder
@@ -22594,7 +22594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5208511064546136796, guid: 98e61cce4f00e40b6852138c7fe401c7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17
+      value: -84
       objectReference: {fileID: 0}
     - target: {fileID: 5208511064546136796, guid: 98e61cce4f00e40b6852138c7fe401c7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22602,7 +22602,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5208511064546136796, guid: 98e61cce4f00e40b6852138c7fe401c7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 63.5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5208511064546136796, guid: 98e61cce4f00e40b6852138c7fe401c7, type: 3}
       propertyPath: m_LocalRotation.w
