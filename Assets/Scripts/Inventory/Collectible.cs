@@ -18,7 +18,7 @@ public class Collectible : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             // Increase the quest progress
-            if (questManager.quest.isActive)
+            if (questManager != null && questManager.quest.isActive)
             {
                 questManager.quest.goal.ItemCollected();
             }

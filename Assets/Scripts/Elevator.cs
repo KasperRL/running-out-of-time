@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Escalator : MonoBehaviour
+public class Elevator : MonoBehaviour
 {
     public GameObject instructions;
     public TextMeshProUGUI instructionsText;
     
-    private bool triggerActive = false;
+    private bool inRange = false;
     private bool isUp = false;
 
     void Update()
     {        
-        if (triggerActive)
+        if (inRange)
         {
             if (Input.GetKeyDown(KeyCode.E) && !isUp)
             {
-                gameObject.GetComponent<Animation>().Play("Up");
+                gameObject.GetComponent<Animator>().Play("Up");
                 instructions.SetActive(false);
                 isUp = true;
             }
             else if (Input.GetKeyDown(KeyCode.E) && isUp)
             {
-                gameObject.GetComponent<Animation>().Play("Down");
+                gameObject.GetComponent<Animator>().Play("Down");
                 instructions.SetActive(false);
                 isUp = false;
             }
@@ -36,7 +36,7 @@ public class Escalator : MonoBehaviour
         {
             instructionsText.text = "Press \"E\" to use the escelator";
             instructions.SetActive(true);
-            triggerActive = true;
+            inRange = true;
         }
     }
 
@@ -45,7 +45,7 @@ public class Escalator : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             instructions.SetActive(false);
-            triggerActive = false;
+            inRange = false;
         }
     }
 }
