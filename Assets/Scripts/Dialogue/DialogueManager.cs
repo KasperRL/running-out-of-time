@@ -65,7 +65,6 @@ public class DialogueManager : MonoBehaviour
         Debug.Log("End of conversation.");
         dialogueBox.SetActive(false);
         dialogueActive = false;
-        
-        FindObjectOfType<QuestManager>().currentQuest = "Refuel the rocket";
+        FindObjectOfType<NPC>().StartQuest();
     }
 }

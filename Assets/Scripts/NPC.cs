@@ -7,14 +7,19 @@ public class NPC : MonoBehaviour
 {
     public GameObject instructions;
     public TextMeshProUGUI instructionsText;
+
     public Dialogue dialogue;
+    public Quest quest;
+
+    private DialogueManager dialogueManager;
+    private QuestManager questManager;
 
     private bool triggerActive = false;
-    private DialogueManager dialogueManager;
 
     void Start()
     {
         dialogueManager = FindObjectOfType<DialogueManager>();
+        questManager = FindObjectOfType<QuestManager>();
     }
 
     private void Update()
@@ -22,17 +27,14 @@ public class NPC : MonoBehaviour
         // Check for input when the trigger is active
         if (triggerActive)
         {
-            if (Input.GetKeyDown(KeyCode.E) && !dialogueManager.dialogueActive)
+            if (Input.GetKeyDown(KeyCode.E) && !dialogueManager.dialogueActive && !questManager.quest.isActive)
             {
-                // Start the dialogue
                 instructions.SetActive(false);
-                FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
-                dialogueManager.dialogueActive = true;
+                dialogueManager.StartDialogue(dialogue);
             }
-            else if (Input.GetKeyDown(KeyCode.E) && dialogueManager.dialogueActive)
+            else if (Input.GetKeyDown(KeyCode.E) && dialogueManager.dialogueActive && !questManager.quest.isActive)
             {
-                // Display the next sentence
-                FindObjectOfType<DialogueManager>().DisplayNextSentence();
+                dialogueManager.DisplayNextSentence();
             }
         }
     }
@@ -41,7 +43,7 @@ public class NPC : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            if (gameObject.tag == "NPC")
+            if (gameObject.tag == "NPC" && !questManager.quest.isActive)
             {
                 // Only show the instructions if the player is close enough to the NPC and a conversation is not already active
                 if (!dialogueManager.dialogueActive)
@@ -69,5 +71,10 @@ public class NPC : MonoBehaviour
     {
         dialogueManager.StartDialogue(dialogue);
         dialogueManager.dialogueActive = true;
+    }
+
+    public void StartQuest()
+    {
+        questManager.StartQuest(quest);
     }
 }
