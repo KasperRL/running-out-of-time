@@ -12,6 +12,10 @@ public class QuestManager : MonoBehaviour
     public GameObject questBox;
     public TextMeshProUGUI questText;
     public Slider questProgress;
+    public TextMeshProUGUI timerText;
+    
+    private bool timerIsRunning;
+    private float timeRemaining;
     
     void Awake()
     {
@@ -36,9 +40,28 @@ public class QuestManager : MonoBehaviour
             {
                 quest.isActive = false;
                 questText.text = "Quest completed!";
+                StopTimer();
             }
             questProgress.value = quest.goal.currentAmount;
             questProgress.maxValue = quest.goal.requiredAmount;
+        }
+
+        // Check if the timer is running
+        if (timerIsRunning)
+        {
+            // Check if the timer has reached 0
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                DisplayTime(timeRemaining);
+            }
+            else
+            {
+                timeRemaining = 0;
+                timerIsRunning = false;
+                quest.isActive = false;
+                questText.text = "Quest failed!";
+            }
         }
     }
 
@@ -48,5 +71,26 @@ public class QuestManager : MonoBehaviour
         quest.isActive = true;
         questBox.SetActive(true);
         questText.text = "Quest: " + quest.description;
+        StartTimer(90.0f);
+    }
+
+    public void StartTimer(float time)
+    {
+        timeRemaining = time;
+        timerIsRunning = true;
+    }
+
+    public void StopTimer()
+    {
+        timerIsRunning = false;
+        timerText.text = "Ready for launch!";
+    }
+
+    void DisplayTime(float timeToDisplay)
+    {
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+
+        timerText.text = "Launch in: " + string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 }
