@@ -24,8 +24,10 @@ public class GameManager : MonoBehaviour
         }
 
         // Hide the cursor when not in the main menu
-        if (SceneManager.GetActiveScene().name == "MainMenu")
+        if (SceneManager.GetActiveScene().name != "MainMenu")
         {
+            Cursor.visible = false;
+        } else {
             Cursor.visible = true;
         }
     }
@@ -51,6 +53,7 @@ public class GameManager : MonoBehaviour
         AudioListener.pause = false;
         Time.timeScale = 1f;
         isPaused = false;
+        Cursor.visible = false;
     }
 
     public void Pause()
@@ -59,6 +62,7 @@ public class GameManager : MonoBehaviour
         AudioListener.pause = true;
         Time.timeScale = 0f;
         isPaused = true;
+        Cursor.visible = true;
     }
 
     public void GameOver()
@@ -67,11 +71,24 @@ public class GameManager : MonoBehaviour
         AudioListener.pause = true;
         Time.timeScale = 0f;
         isGameOver = true;
+        Cursor.visible = true;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     public void GameCompleted()
     {
-        SceneManager.LoadScene("GameCompleted");
+        StartCoroutine(ShowEndScene());
+    }
+
+    IEnumerator ShowEndScene()
+    {
+        SceneManager.LoadScene(3);
+        yield return new WaitForSeconds(11f);
+        MainMenu();
     }
 
     public void MainMenu()
@@ -87,5 +104,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
         isGameOver = false;
+        Cursor.visible = true;
     }
 }

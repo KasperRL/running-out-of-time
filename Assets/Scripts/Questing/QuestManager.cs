@@ -45,6 +45,8 @@ public class QuestManager : MonoBehaviour
                 quest.isActive = false;
                 questText.text = "Quest completed!";
                 StopTimer();
+                completedQuests.Add(quest);
+                gameManager.GameCompleted();
             }
             questProgress.value = quest.goal.currentAmount;
             questProgress.maxValue = quest.goal.requiredAmount;
