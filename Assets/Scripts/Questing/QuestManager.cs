@@ -14,11 +14,15 @@ public class QuestManager : MonoBehaviour
     public Slider questProgress;
     public TextMeshProUGUI timerText;
     
+    private GameManager gameManager;
+    
     private bool timerIsRunning;
     private float timeRemaining;
     
     void Awake()
     {
+        gameManager = FindObjectOfType<GameManager>();
+        
         // Make sure there is only one QuestManager
         if (FindObjectsOfType(GetType()).Length > 1)
         {
@@ -61,6 +65,7 @@ public class QuestManager : MonoBehaviour
                 timerIsRunning = false;
                 quest.isActive = false;
                 questText.text = "Quest failed!";
+                gameManager.GameOver();
             }
         }
     }
@@ -71,7 +76,7 @@ public class QuestManager : MonoBehaviour
         quest.isActive = true;
         questBox.SetActive(true);
         questText.text = "Quest: " + quest.description;
-        StartTimer(90.0f);
+        StartTimer(70.0f);
     }
 
     public void StartTimer(float time)
@@ -88,6 +93,8 @@ public class QuestManager : MonoBehaviour
 
     void DisplayTime(float timeToDisplay)
     {
+        timeToDisplay += 1;
+
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
 

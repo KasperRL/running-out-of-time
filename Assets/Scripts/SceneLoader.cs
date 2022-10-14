@@ -9,8 +9,8 @@ public class SceneLoader : MonoBehaviour
     public GameObject loadingScreen;
     public Slider slider;
     public TextMeshProUGUI progressText;
-    public GameObject instructions;
-    public TextMeshProUGUI instructionsText;
+    public GameObject instructions = null;
+    public TextMeshProUGUI instructionsText = null;
     public int sceneIndex;
 
     private bool triggerActive = false;
@@ -31,7 +31,7 @@ public class SceneLoader : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                StartCoroutine(LoadScene(sceneIndex)); // Load the scene when E is pressed
+                StartCoroutine(LoadSceneAsync(sceneIndex)); // Load the scene when E is pressed
             }
         }
     }
@@ -50,7 +50,7 @@ public class SceneLoader : MonoBehaviour
     }
 
     // Load scene asynchronously and display progress on loading screen
-    IEnumerator LoadScene(int sceneIndex)
+    IEnumerator LoadSceneAsync(int sceneIndex)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
 
@@ -65,5 +65,15 @@ public class SceneLoader : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    public void LoadScene(int sceneIndex = 0)
+    {
+        StartCoroutine(LoadSceneAsync(sceneIndex));
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
