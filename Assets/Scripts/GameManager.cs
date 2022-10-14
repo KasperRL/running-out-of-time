@@ -10,9 +10,9 @@ public class GameManager : MonoBehaviour
 
     public static bool isPaused = false;
     public static bool isGameOver = false;
-
+    
     void Awake()
-    {        
+    {
         // Make sure there is only one GameManager
         if (FindObjectsOfType<GameManager>().Length > 1)
         {
@@ -27,8 +27,10 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name != "MainMenu")
         {
             Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         } else {
             Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 
@@ -54,6 +56,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void Pause()
@@ -63,6 +66,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         isPaused = true;
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void GameOver()
@@ -72,6 +76,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         isGameOver = true;
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void QuitGame()
@@ -105,5 +110,6 @@ public class GameManager : MonoBehaviour
         isPaused = false;
         isGameOver = false;
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 }

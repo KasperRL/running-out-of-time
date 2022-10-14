@@ -6,11 +6,10 @@ using TMPro;
 
 public class SceneLoader : MonoBehaviour
 {
-    public GameObject loadingScreen;
-    public Slider slider;
-    public TextMeshProUGUI progressText;
+    public Animator transition;
     public GameObject instructions = null;
     public TextMeshProUGUI instructionsText = null;
+
     public int sceneIndex;
 
     private bool triggerActive = false;
@@ -52,19 +51,11 @@ public class SceneLoader : MonoBehaviour
     // Load scene asynchronously and display progress on loading screen
     IEnumerator LoadSceneAsync(int sceneIndex)
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
+        transition.SetTrigger("Start");
 
-        loadingScreen.SetActive(true);
+        yield return new WaitForSeconds(1);
 
-        while (!operation.isDone)
-        {
-            float progress = Mathf.Clamp01(operation.progress / .9f); // Clamp01 ensures progress is between 0 and 1
-
-            slider.value = progress;
-            progressText.text = progress * 100f + "%";
-
-            yield return null;
-        }
+        SceneManager.LoadSceneAsync(sceneIndex);
     }
 
     public void LoadScene(int sceneIndex = 0)
