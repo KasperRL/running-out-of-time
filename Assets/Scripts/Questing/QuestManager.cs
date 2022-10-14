@@ -7,6 +7,7 @@ using TMPro;
 public class QuestManager : MonoBehaviour
 {
     public Quest quest;
+    public List<Quest> completedQuests = new List<Quest>();
 
     public GameObject questBox;
     public TextMeshProUGUI questText;

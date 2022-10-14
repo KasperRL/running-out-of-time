@@ -34,7 +34,7 @@ public class Elevator : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            instructionsText.text = "Press \"E\" to use the escelator";
+            instructionsText.text = "Press \"E\" to use the elevator";
             instructions.SetActive(true);
             inRange = true;
         }

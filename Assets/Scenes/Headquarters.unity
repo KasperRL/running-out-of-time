@@ -2037,6 +2037,7 @@ MonoBehaviour:
       isReached: 0
     isActive: 0
     description: 
+  completedQuests: []
   questBox: {fileID: 831237250}
   questText: {fileID: 87357371}
   questProgress: {fileID: 1872619671}

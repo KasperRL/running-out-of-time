@@ -7,6 +7,7 @@ public class RefuelGoal : MonoBehaviour
 {
     public GameObject instructions;
     public TextMeshProUGUI instructionsText;
+    public GameObject fuelCan;
 
     private QuestManager questManager;
     private Inventory inventory;
@@ -16,6 +17,10 @@ public class RefuelGoal : MonoBehaviour
     {
         questManager = FindObjectOfType<QuestManager>();
         inventory = FindObjectOfType<Inventory>();
+        if (questManager != null && questManager.quest.isActive)
+        {
+            Instantiate(fuelCan, new Vector3(-4f, 0.3f, 69.5f), fuelCan.transform.rotation);
+        }
     }
     
     void Update()
@@ -25,6 +30,7 @@ public class RefuelGoal : MonoBehaviour
             questManager.quest.goal.ItemCollected();
             inventory.removeItem("Fuel");
             instructions.SetActive(false);
+            questManager.completedQuests.Add(questManager.quest);
         }
     }
     
