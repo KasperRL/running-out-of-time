@@ -29,10 +29,10 @@ public class RefuelGoal : MonoBehaviour
         {
             if (inventory.HasItem("Fuel"))
             {
-                questManager.quest.description = "Go to the rocket and refuel it.";
+                questManager.quest.description = "Refuel the rocket.";
             } else
             {
-                questManager.quest.description = "Find a fuel can.";
+                questManager.quest.description = "Collect the fuel can.";
             }
         }
         
