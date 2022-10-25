@@ -9,12 +9,14 @@ public class RepairGoal : MonoBehaviour
     public TextMeshProUGUI instructionsText;
     
     private QuestManager questManager;
+    private AudioSource audioSource;
 
     private bool isInRange = false;
     
     void Start()
     {
         questManager = FindObjectOfType<QuestManager>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -25,8 +27,7 @@ public class RepairGoal : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.E) && isInRange && !questManager.quest.goal.isReached)
             {
-                questManager.quest.goal.ItemCollected();
-                instructions.SetActive(false);
+                StartCoroutine(Repair());
             }
         }
     }
@@ -48,5 +49,13 @@ public class RepairGoal : MonoBehaviour
             instructions.SetActive(false);
             isInRange = false;
         }
+    }
+
+    IEnumerator Repair()
+    {
+        audioSource.Play();
+        yield return new WaitWhile(() => audioSource.isPlaying);
+        questManager.quest.goal.ItemCollected();
+        instructions.SetActive(false);
     }
 }

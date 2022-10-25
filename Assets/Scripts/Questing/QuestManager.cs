@@ -42,7 +42,7 @@ public class QuestManager : MonoBehaviour
             if (quest.goal.IsReached())
             {
                 quest.isActive = false;
-                questText.text = "Quest completed!";
+                questText.text = "Quests completed!";
                 StopTimer();
                 gameManager.GameCompleted();
             }
