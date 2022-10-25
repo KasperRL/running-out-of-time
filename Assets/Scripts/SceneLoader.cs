@@ -35,7 +35,7 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay()
+    private void OnTriggerEnter()
     {
         instructionsText.text = "Press \"E\" to travel to \"" + sceneName + "\"";
         instructions.SetActive(true);
@@ -48,7 +48,7 @@ public class SceneLoader : MonoBehaviour
         triggerActive = false;
     }
 
-    // Load scene asynchronously and display progress on loading screen
+    // Load scene asynchronously
     IEnumerator LoadSceneAsync(int sceneIndex)
     {
         transition.SetTrigger("Start");

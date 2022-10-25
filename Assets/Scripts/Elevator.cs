@@ -20,12 +20,14 @@ public class Elevator : MonoBehaviour
                 gameObject.GetComponent<Animator>().Play("Up");
                 instructions.SetActive(false);
                 isUp = true;
+                inRange = false;
             }
             else if (Input.GetKeyDown(KeyCode.E) && isUp)
             {
                 gameObject.GetComponent<Animator>().Play("Down");
                 instructions.SetActive(false);
                 isUp = false;
+                inRange = false;
             }
         }
     }
