@@ -7,6 +7,8 @@ public class Collectible : MonoBehaviour
     private Inventory inventory;
     private QuestManager questManager;
 
+    public AudioClip pickupSound;
+
     void Start()
     {
         inventory = FindObjectOfType<Inventory>();
@@ -23,6 +25,7 @@ public class Collectible : MonoBehaviour
                 questManager.quest.goal.ItemCollected();
             }
             inventory.AddItem("Fuel");
+            AudioSource.PlayClipAtPoint(pickupSound, transform.position);
             Destroy(gameObject);
         }
     }
