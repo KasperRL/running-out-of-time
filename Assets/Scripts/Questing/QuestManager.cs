@@ -70,6 +70,10 @@ public class QuestManager : MonoBehaviour
                 gameManager.GameOver();
             }
         }
+        if (quest.isActive)
+        {
+            questText.text = quest.description;
+        }
     }
 
     public void StartQuest(Quest quest)
@@ -77,7 +81,7 @@ public class QuestManager : MonoBehaviour
         this.quest = quest;
         quest.isActive = true;
         questBox.SetActive(true);
-        questText.text = "Quest: " + quest.description;
+        questText.text = quest.description;
         StartTimer(70.0f);
     }
 

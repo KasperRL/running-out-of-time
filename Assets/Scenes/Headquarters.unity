@@ -4630,7 +4630,7 @@ MonoBehaviour:
       currentAmount: 0
       isReached: 0
     isActive: 0
-    description: Refuel the rocket.
+    description: Find a fuel can.
 --- !u!65 &524851136
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14072,6 +14072,10 @@ PrefabInstance:
     - target: {fileID: 8637852677625980751, guid: 8a2d8cdc723468749a8be7909d5f0153, type: 3}
       propertyPath: m_Name
       value: SceneLoader
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637852677625980751, guid: 8a2d8cdc723468749a8be7909d5f0153, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a2d8cdc723468749a8be7909d5f0153, type: 3}

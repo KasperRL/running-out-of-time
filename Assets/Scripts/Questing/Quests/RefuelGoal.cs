@@ -25,6 +25,17 @@ public class RefuelGoal : MonoBehaviour
     
     void Update()
     {
+        if (!!questManager)
+        {
+            if (inventory.HasItem("Fuel"))
+            {
+                questManager.quest.description = "Go to the rocket and refuel it.";
+            } else
+            {
+                questManager.quest.description = "Find a fuel can.";
+            }
+        }
+        
         if (Input.GetKeyDown(KeyCode.E) && isInRange && !questManager.quest.goal.isReached && inventory.HasItem("Fuel"))
         {
             questManager.quest.goal.ItemCollected();
