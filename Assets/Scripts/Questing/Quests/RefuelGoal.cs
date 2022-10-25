@@ -27,10 +27,10 @@ public class RefuelGoal : MonoBehaviour
     {
         if (!!questManager)
         {
-            if (inventory.HasItem("Fuel"))
+            if (questManager.quest.goal.currentAmount == 1)
             {
                 questManager.quest.description = "Refuel the rocket.";
-            } else
+            } else if (questManager.quest.goal.currentAmount == 0)
             {
                 questManager.quest.description = "Collect the fuel can.";
             }
@@ -41,7 +41,6 @@ public class RefuelGoal : MonoBehaviour
             questManager.quest.goal.ItemCollected();
             inventory.removeItem("Fuel");
             instructions.SetActive(false);
-            questManager.completedQuests.Add(questManager.quest);
         }
     }
     
@@ -50,7 +49,7 @@ public class RefuelGoal : MonoBehaviour
         if (inventory.HasItem("Fuel"))
         {
             instructions.SetActive(true);
-            instructionsText.text = "Press E to refuel the ship";
+            instructionsText.text = "Press E to refuel the rocket";
             isInRange = true;
         }
     }

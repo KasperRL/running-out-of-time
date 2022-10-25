@@ -7,7 +7,6 @@ using TMPro;
 public class QuestManager : MonoBehaviour
 {
     public Quest quest;
-    public List<Quest> completedQuests = new List<Quest>();
 
     public GameObject questBox;
     public TextMeshProUGUI questText;
@@ -45,7 +44,6 @@ public class QuestManager : MonoBehaviour
                 quest.isActive = false;
                 questText.text = "Quest completed!";
                 StopTimer();
-                completedQuests.Add(quest);
                 gameManager.GameCompleted();
             }
             questProgress.value = quest.goal.currentAmount;

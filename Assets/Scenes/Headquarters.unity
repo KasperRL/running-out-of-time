@@ -2817,7 +2817,6 @@ MonoBehaviour:
       isReached: 0
     isActive: 0
     description: 
-  completedQuests: []
   questBox: {fileID: 831237250}
   questText: {fileID: 87357371}
   questProgress: {fileID: 1872619671}
@@ -4620,13 +4619,14 @@ MonoBehaviour:
     name: Commander
     sentences:
     - Hey there, I am your commander.
-    - The rocket needs refueling before we can launch, it is your job to make sure
-      we can launch in time.
+    - The rocket needs refueling and repairs before we can launch.
+    - After you're done, there is some missing gear I need you to locate.
+    - It is your job to make sure we can launch in time.
     - Remember, you're on a timer. Get going!
   quest:
     goal:
       goalType: 0
-      requiredAmount: 2
+      requiredAmount: 3
       currentAmount: 0
       isReached: 0
     isActive: 0
