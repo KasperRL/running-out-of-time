@@ -17,10 +17,13 @@ public class MissingGearGoal : MonoBehaviour
 
     private bool isInRange = false;
     private bool crateSpawned = false;
-    private float crateMaxX = 45f;
-    private float crateMaxZ = 25f;
-    private float crateMinX = -80f;
-    private float crateMinZ = -30f;
+    private Vector3[] crateSpawnPositions = {
+        new Vector3(15f, 0.1f, 24.6f),
+        new Vector3(32.9f, 0.1f, 33.4f),
+        new Vector3(-19.3f, 0.3f, -3f),
+        new Vector3(-36f, 0.3f, -36.9f),
+        new Vector3(-44.7f, 0f, 27.76f)
+    };
     
     void Start()
     {
@@ -36,7 +39,8 @@ public class MissingGearGoal : MonoBehaviour
             if (!crateSpawned)
             {
                 crateSpawned = true;
-                Instantiate(crate, new Vector3(Random.Range(crateMinX, crateMaxX), .2f, Random.Range(crateMinZ, crateMaxZ)), cratePlaceholder.transform.rotation);
+                int randomIndex = Random.Range(0, crateSpawnPositions.Length);
+                Instantiate(crate, crateSpawnPositions[randomIndex], cratePlaceholder.transform.rotation);
             }
         } else if (questManager.quest.goal.currentAmount == questId + 1 && inventory.HasItem("Gear Crate"))
         {
