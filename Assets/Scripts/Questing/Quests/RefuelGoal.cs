@@ -13,6 +13,7 @@ public class RefuelGoal : MonoBehaviour
 
     private QuestManager questManager;
     private Inventory inventory;
+    private AudioSource audioSource;
 
     private bool isInRange;
     
@@ -20,6 +21,8 @@ public class RefuelGoal : MonoBehaviour
     {
         questManager = FindObjectOfType<QuestManager>();
         inventory = FindObjectOfType<Inventory>();
+        audioSource = GetComponent<AudioSource>();
+
         if (questManager != null && questManager.quest.isActive)
         {
             Instantiate(fuelCan, new Vector3(-4f, 0.3f, 69.5f), fuelCan.transform.rotation);
@@ -41,9 +44,9 @@ public class RefuelGoal : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.E) && isInRange && !questManager.quest.goal.isReached && inventory.HasItem("Fuel"))
         {
-            questManager.quest.goal.ItemCollected();
-            inventory.removeItem("Fuel");
             instructions.SetActive(false);
+            inventory.removeItem("Fuel");
+            StartCoroutine(Refuel());
         }
     }
     
@@ -61,5 +64,12 @@ public class RefuelGoal : MonoBehaviour
     {
         instructions.SetActive(false);
         isInRange = false;
+    }
+
+    IEnumerator Refuel()
+    {
+        audioSource.Play();
+        yield return new WaitWhile(() => audioSource.isPlaying);
+        questManager.quest.goal.ItemCollected();
     }
 }
