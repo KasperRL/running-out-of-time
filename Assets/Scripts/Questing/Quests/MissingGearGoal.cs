@@ -35,7 +35,7 @@ public class MissingGearGoal : MonoBehaviour
     {
         if (questManager.quest.goal.currentAmount == questId)
         {
-            questManager.quest.description = "Find the missing gear crate.";
+            questManager.quest.description = "Find the missing gear crate, it was dropped along the dirt road.";
             if (!crateSpawned)
             {
                 crateSpawned = true;
@@ -44,7 +44,7 @@ public class MissingGearGoal : MonoBehaviour
             }
         } else if (questManager.quest.goal.currentAmount == questId + 1 && inventory.HasItem("Gear Crate"))
         {
-            questManager.quest.description = "Return the missing gear crate to the launch pad.";
+            questManager.quest.description = "Return the missing gear crate to the launchpad.";
         }
 
         if (Input.GetKeyDown(KeyCode.E) && isInRange && !questManager.quest.goal.isReached && inventory.HasItem("Gear Crate"))
