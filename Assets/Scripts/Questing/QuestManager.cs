@@ -80,7 +80,7 @@ public class QuestManager : MonoBehaviour
         quest.isActive = true;
         questBox.SetActive(true);
         questText.text = quest.description;
-        StartTimer(70.0f);
+        StartTimer(240.0f);
     }
 
     public void StartTimer(float time)

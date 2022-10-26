@@ -4626,7 +4626,7 @@ MonoBehaviour:
   quest:
     goal:
       goalType: 0
-      requiredAmount: 3
+      requiredAmount: 5
       currentAmount: 0
       isReached: 0
     isActive: 0

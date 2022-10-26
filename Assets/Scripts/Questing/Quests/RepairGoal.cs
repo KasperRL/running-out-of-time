@@ -7,6 +7,8 @@ public class RepairGoal : MonoBehaviour
 {
     public GameObject instructions;
     public TextMeshProUGUI instructionsText;
+
+    public int questId = 2;
     
     private QuestManager questManager;
     private AudioSource audioSource;
@@ -21,12 +23,13 @@ public class RepairGoal : MonoBehaviour
 
     void Update()
     {
-        if (questManager.quest.goal.currentAmount == 2)
+        if (questManager.quest.goal.currentAmount == questId)
         {
             questManager.quest.description = "Repair the rocket.";
 
             if (Input.GetKeyDown(KeyCode.E) && isInRange && !questManager.quest.goal.isReached)
             {
+                instructions.SetActive(false);
                 StartCoroutine(Repair());
             }
         }
@@ -34,10 +37,10 @@ public class RepairGoal : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player" && questManager.quest.goal.currentAmount == 2)
+        if (other.gameObject.tag == "Player" && questManager.quest.goal.currentAmount == questId)
         {
             instructions.SetActive(true);
-            instructionsText.text = "Press E to repair the rocket";
+            instructionsText.text = "Press 'E' to repair the rocket";
             isInRange = true;
         }
     }
@@ -56,6 +59,5 @@ public class RepairGoal : MonoBehaviour
         audioSource.Play();
         yield return new WaitWhile(() => audioSource.isPlaying);
         questManager.quest.goal.ItemCollected();
-        instructions.SetActive(false);
     }
 }

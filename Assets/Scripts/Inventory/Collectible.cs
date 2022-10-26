@@ -24,7 +24,7 @@ public class Collectible : MonoBehaviour
             {
                 questManager.quest.goal.ItemCollected();
             }
-            inventory.AddItem("Fuel");
+            inventory.AddItem(gameObject.tag);
             AudioSource.PlayClipAtPoint(pickupSound, transform.position);
             Destroy(gameObject);
         }

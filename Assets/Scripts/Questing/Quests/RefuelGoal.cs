@@ -9,8 +9,11 @@ public class RefuelGoal : MonoBehaviour
     public TextMeshProUGUI instructionsText;
     public GameObject fuelCan;
 
+    public int questId = 0;
+
     private QuestManager questManager;
     private Inventory inventory;
+
     private bool isInRange;
     
     void Awake()
@@ -27,10 +30,10 @@ public class RefuelGoal : MonoBehaviour
     {
         if (!!questManager)
         {
-            if (questManager.quest.goal.currentAmount == 1)
+            if (questManager.quest.goal.currentAmount == questId + 1)
             {
                 questManager.quest.description = "Refuel the rocket.";
-            } else if (questManager.quest.goal.currentAmount == 0)
+            } else if (questManager.quest.goal.currentAmount == questId)
             {
                 questManager.quest.description = "Collect the fuel can.";
             }
@@ -49,7 +52,7 @@ public class RefuelGoal : MonoBehaviour
         if (inventory.HasItem("Fuel"))
         {
             instructions.SetActive(true);
-            instructionsText.text = "Press E to refuel the rocket";
+            instructionsText.text = "Press 'E' to refuel the rocket";
             isInRange = true;
         }
     }
