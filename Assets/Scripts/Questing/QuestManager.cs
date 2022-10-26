@@ -44,7 +44,7 @@ public class QuestManager : MonoBehaviour
                 quest.isActive = false;
                 questText.text = "Quests completed!";
                 StopTimer();
-                gameManager.GameCompleted();
+                StartCoroutine(EndGame());
             }
             questProgress.value = quest.goal.currentAmount;
             questProgress.maxValue = quest.goal.requiredAmount;
@@ -103,5 +103,11 @@ public class QuestManager : MonoBehaviour
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
 
         timerText.text = "Launch in: " + string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    IEnumerator EndGame()
+    {
+        yield return new WaitForSeconds(3);
+        gameManager.GameCompleted();
     }
 }

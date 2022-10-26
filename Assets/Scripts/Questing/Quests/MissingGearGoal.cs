@@ -50,7 +50,9 @@ public class MissingGearGoal : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && isInRange && !questManager.quest.goal.isReached && inventory.HasItem("Gear Crate"))
         {
             instructions.SetActive(false);
-            StartCoroutine(PlaceCrate());
+            cratePlaceholder.SetActive(true);
+            questManager.quest.goal.ItemCollected();
+            inventory.removeItem("Gear Crate");
         }
     }
 
@@ -71,13 +73,5 @@ public class MissingGearGoal : MonoBehaviour
             instructions.SetActive(false);
             isInRange = false;
         }
-    }
-
-    IEnumerator PlaceCrate()
-    {
-        cratePlaceholder.SetActive(true);
-        yield return new WaitForSeconds(1f);
-        questManager.quest.goal.ItemCollected();
-        inventory.removeItem("Gear Crate");
     }
 }
