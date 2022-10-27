@@ -17,6 +17,7 @@ public class MissingGearGoal : MonoBehaviour
 
     private bool isInRange = false;
     private bool crateSpawned = false;
+    // All possible spawn locations for the crate
     private Vector3[] crateSpawnPositions = {
         new Vector3(15f, 0.1f, 24.6f),
         new Vector3(32.9f, 0.1f, 33.4f),
@@ -25,7 +26,7 @@ public class MissingGearGoal : MonoBehaviour
         new Vector3(-44.7f, 0f, 27.76f)
     };
     
-    void Start()
+    void Awake()
     {
         questManager = FindObjectOfType<QuestManager>();
         inventory = FindObjectOfType<Inventory>();
@@ -36,11 +37,13 @@ public class MissingGearGoal : MonoBehaviour
         if (questManager.quest.goal.currentAmount == questId)
         {
             questManager.quest.description = "Find the missing gear crate, it was dropped along the dirt road.";
-            if (!crateSpawned)
-            {
-                crateSpawned = true;
+            if (!crateSpawned) // Only spawn the missing create when this is the current quest and it hasn't been spawned yet
+            {                
+                // Spawn the crate at a random location from the crateSpawnPositions array
                 int randomIndex = Random.Range(0, crateSpawnPositions.Length);
                 Instantiate(crate, crateSpawnPositions[randomIndex], cratePlaceholder.transform.rotation);
+
+                crateSpawned = true;
             }
         } else if (questManager.quest.goal.currentAmount == questId + 1 && inventory.HasItem("Gear Crate"))
         {
@@ -49,18 +52,23 @@ public class MissingGearGoal : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && isInRange && !questManager.quest.goal.isReached && inventory.HasItem("Gear Crate"))
         {
-            instructions.SetActive(false);
-            cratePlaceholder.SetActive(true);
-            questManager.quest.goal.ItemCollected();
+            instructions.SetActive(false); // Hide instructions UI
+            
+            cratePlaceholder.SetActive(true); // Show the crate placeholder as if the crate was placed there by the player
+
+            // Increase the quest progress
             inventory.removeItem("Gear Crate");
+            questManager.quest.goal.ItemCollected();
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player" && questManager.quest.goal.currentAmount == questId + 1 && inventory.HasItem("Gear Crate"))
+        if (other.gameObject.tag == "Player" && questManager.quest.goal.currentAmount == questId + 1 && inventory.HasItem("Gear Crate")) // Only give the player the ability to place the crate when the player has the crate in their inventory
         {
             isInRange = true;
+            
+            // Activate instructions UI
             instructions.SetActive(true);
             instructionsText.text = "Press 'E' to place the gear crate.";
         }
@@ -70,8 +78,10 @@ public class MissingGearGoal : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            instructions.SetActive(false);
             isInRange = false;
+
+            // Deactivate instructions UI
+            instructions.SetActive(false);
         }
     }
 }

@@ -14,9 +14,9 @@ public class NPC : MonoBehaviour
     private DialogueManager dialogueManager;
     private QuestManager questManager;
 
-    private bool triggerActive = false;
+    private bool inRange = false;
 
-    void Start()
+    void Awake()
     {
         dialogueManager = FindObjectOfType<DialogueManager>();
         questManager = FindObjectOfType<QuestManager>();
@@ -24,12 +24,13 @@ public class NPC : MonoBehaviour
 
     private void Update()
     {
-        // Check for input when the trigger is active
-        if (triggerActive)
+        // Check for input when in range
+        if (inRange)
         {
             if (Input.GetKeyDown(KeyCode.E) && !dialogueManager.dialogueActive && !questManager.quest.isActive)
             {
                 instructions.SetActive(false);
+
                 dialogueManager.StartDialogue(dialogue);
             }
             else if (Input.GetKeyDown(KeyCode.E) && dialogueManager.dialogueActive && !questManager.quest.isActive)
@@ -48,9 +49,10 @@ public class NPC : MonoBehaviour
                 // Only show the instructions if the player is close enough to the NPC and a conversation is not already active
                 if (!dialogueManager.dialogueActive)
                 {
+                    inRange = true;
+                    
                     instructionsText.text = "Press \"E\" to talk to " + gameObject.name;
                     instructions.SetActive(true);
-                    triggerActive = true;
                 }
             }
         }
@@ -60,10 +62,11 @@ public class NPC : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            inRange = false;
+            dialogueManager.dialogueActive = false; // Reset dialogue state when player leaves the NPC's range
+            
             instructions.SetActive(false);
             dialogueManager.dialogueBox.SetActive(false);
-            triggerActive = false;
-            dialogueManager.dialogueActive = false;
         }
     }
 

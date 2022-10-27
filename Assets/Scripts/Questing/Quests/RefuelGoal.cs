@@ -23,8 +23,9 @@ public class RefuelGoal : MonoBehaviour
         inventory = FindObjectOfType<Inventory>();
         audioSource = GetComponent<AudioSource>();
 
-        if (questManager != null && questManager.quest.isActive)
+        if (questManager != null && questManager.quest.isActive && questManager.quest.goal.currentAmount == questId)
         {
+            // Only spawn the fuel can when the quest has been started
             Instantiate(fuelCan, new Vector3(-4f, 0.3f, 69.5f), fuelCan.transform.rotation);
         }
     }
@@ -33,6 +34,7 @@ public class RefuelGoal : MonoBehaviour
     {
         if (!!questManager)
         {
+            // Update the quest description
             if (questManager.quest.goal.currentAmount == questId + 1)
             {
                 questManager.quest.description = "Refuel the rocket.";
@@ -45,6 +47,7 @@ public class RefuelGoal : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && isInRange && !questManager.quest.goal.isReached && inventory.HasItem("Fuel"))
         {
             instructions.SetActive(false);
+
             inventory.removeItem("Fuel");
             StartCoroutine(Refuel());
         }
@@ -52,24 +55,29 @@ public class RefuelGoal : MonoBehaviour
     
     void OnTriggerEnter()
     {
-        if (inventory.HasItem("Fuel"))
+        if (inventory.HasItem("Fuel") && questManager.quest.goal.currentAmount == questId + 1)
         {
+            isInRange = true;
+            
+            // Show instructions UI
             instructions.SetActive(true);
             instructionsText.text = "Press 'E' to refuel the rocket";
-            isInRange = true;
         }
     }
 
     void OnTriggerExit()
     {
-        instructions.SetActive(false);
         isInRange = false;
+        
+        // Hide instructions UI
+        instructions.SetActive(false);
     }
 
+    // Refuel the rocket with a sound effect
     IEnumerator Refuel()
     {
         audioSource.Play();
         yield return new WaitWhile(() => audioSource.isPlaying);
-        questManager.quest.goal.ItemCollected();
+        questManager.quest.goal.ItemCollected(); // Increase the quest progress
     }
 }

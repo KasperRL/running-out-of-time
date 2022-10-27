@@ -13,21 +13,14 @@ public class Elevator : MonoBehaviour
 
     void Update()
     {        
-        if (inRange)
+        if (inRange && Input.GetKeyDown(KeyCode.E))
         {
-            if (Input.GetKeyDown(KeyCode.E) && !isUp)
+            if (isUp)
             {
-                gameObject.GetComponent<Animator>().Play("Up");
-                instructions.SetActive(false);
-                isUp = true;
-                inRange = false;
-            }
-            else if (Input.GetKeyDown(KeyCode.E) && isUp)
+                MoveDown();
+            } else
             {
-                gameObject.GetComponent<Animator>().Play("Down");
-                instructions.SetActive(false);
-                isUp = false;
-                inRange = false;
+                MoveUp();
             }
         }
     }
@@ -36,9 +29,10 @@ public class Elevator : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            inRange = true;
+            
             instructionsText.text = "Press \"E\" to use the elevator";
             instructions.SetActive(true);
-            inRange = true;
         }
     }
 
@@ -46,8 +40,29 @@ public class Elevator : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            instructions.SetActive(false);
             inRange = false;
+            
+            instructions.SetActive(false);
         }
+    }
+
+    void MoveDown()
+    {
+        gameObject.GetComponent<Animator>().Play("Down"); // Play the elevator animation to go down
+        
+        instructions.SetActive(false); // Hide instructions UI
+
+        isUp = false;
+        inRange = false;
+    }
+
+    void MoveUp()
+    {
+        gameObject.GetComponent<Animator>().Play("Up"); // Play the elevator animation to go up
+
+        instructions.SetActive(false); // Hide instructions UI
+        
+        isUp = true;
+        inRange = false;
     }
 }

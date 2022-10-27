@@ -12,7 +12,7 @@ public class SceneLoader : MonoBehaviour
 
     public int sceneIndex;
 
-    private bool triggerActive = false;
+    private bool inRange = false;
 
     private string sceneName;
 
@@ -25,8 +25,8 @@ public class SceneLoader : MonoBehaviour
 
     private void Update()
     {
-        // Check for input when the trigger is active
-        if (triggerActive)
+        // Check for input when in range
+        if (inRange)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -37,15 +37,17 @@ public class SceneLoader : MonoBehaviour
 
     private void OnTriggerEnter()
     {
+        inRange = true;
+        
         instructionsText.text = "Press \"E\" to travel to \"" + sceneName + "\"";
         instructions.SetActive(true);
-        triggerActive = true;
     }
 
     private void OnTriggerExit()
     {
+        inRange = false;
+        
         instructions.SetActive(false);
-        triggerActive = false;
     }
 
     // Load scene asynchronously

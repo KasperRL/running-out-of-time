@@ -38,13 +38,14 @@ public class QuestManager : MonoBehaviour
         // Check if the quest is active
         if (quest.isActive)
         {
-            // Check if the quest is completed
+            // Check if the game is completed
             if (quest.goal.IsReached())
             {
                 quest.isActive = false;
                 questText.text = "Quests completed!";
-                StopTimer();
-                StartCoroutine(EndGame());
+
+                StopTimer(); // Stop the timer
+                StartCoroutine(EndGame()); // End the game and trigger the end scene
             }
             questProgress.value = quest.goal.currentAmount;
             questProgress.maxValue = quest.goal.requiredAmount;
@@ -63,9 +64,11 @@ public class QuestManager : MonoBehaviour
             {
                 timeRemaining = 0;
                 timerIsRunning = false;
+
                 quest.isActive = false;
-                questText.text = "Quest failed!";
-                gameManager.GameOver();
+                questText.text = "Quests failed!";
+
+                gameManager.GameOver(); // Trigger the game over UI
             }
         }
         if (quest.isActive)
@@ -78,9 +81,12 @@ public class QuestManager : MonoBehaviour
     {
         this.quest = quest;
         quest.isActive = true;
+        
+        // Show quest UI
         questBox.SetActive(true);
         questText.text = quest.description;
-        StartTimer(240.0f);
+
+        StartTimer(240.0f); // Start the launch countdown
     }
 
     public void StartTimer(float time)
@@ -95,6 +101,7 @@ public class QuestManager : MonoBehaviour
         timerText.text = "Ready for launch!";
     }
 
+    // Display the time in minutes and seconds on quest UI
     void DisplayTime(float timeToDisplay)
     {
         timeToDisplay += 1;
@@ -105,6 +112,7 @@ public class QuestManager : MonoBehaviour
         timerText.text = "Launch in: " + string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
+    // End the game and trigger the end scene with a delay
     IEnumerator EndGame()
     {
         yield return new WaitForSeconds(3);

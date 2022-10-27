@@ -15,7 +15,7 @@ public class RepairGoal : MonoBehaviour
 
     private bool isInRange = false;
     
-    void Start()
+    void Awake()
     {
         questManager = FindObjectOfType<QuestManager>();
         audioSource = GetComponent<AudioSource>();
@@ -39,9 +39,10 @@ public class RepairGoal : MonoBehaviour
     {
         if (other.gameObject.tag == "Player" && questManager.quest.goal.currentAmount == questId)
         {
+            isInRange = true;
+            
             instructions.SetActive(true);
             instructionsText.text = "Press 'E' to repair the rocket";
-            isInRange = true;
         }
     }
 
@@ -49,15 +50,17 @@ public class RepairGoal : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            instructions.SetActive(false);
             isInRange = false;
+            
+            instructions.SetActive(false);
         }
     }
 
+    // Repair the rocket with a sound effect
     IEnumerator Repair()
     {
         audioSource.Play();
         yield return new WaitWhile(() => audioSource.isPlaying);
-        questManager.quest.goal.ItemCollected();
+        questManager.quest.goal.ItemCollected(); // Increase the quest progress
     }
 }

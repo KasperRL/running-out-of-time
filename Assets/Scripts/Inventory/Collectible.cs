@@ -9,7 +9,7 @@ public class Collectible : MonoBehaviour
 
     public AudioClip pickupSound;
 
-    void Start()
+    void Awake()
     {
         inventory = FindObjectOfType<Inventory>();
         questManager = FindObjectOfType<QuestManager>();
@@ -24,8 +24,11 @@ public class Collectible : MonoBehaviour
             {
                 questManager.quest.goal.ItemCollected();
             }
+
             inventory.AddItem(gameObject.tag);
+
             AudioSource.PlayClipAtPoint(pickupSound, transform.position);
+            
             Destroy(gameObject);
         }
     }

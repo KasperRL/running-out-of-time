@@ -12,44 +12,43 @@ public class DialogueManager : MonoBehaviour
     
     private Queue<string> sentences;
     
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        sentences = new Queue<string>();
+        sentences = new Queue<string>(); // All sentences are stored in a queue to be able to display them one by one
     }
 
     public void StartDialogue(Dialogue dialogue)
     {
-        Debug.Log("Starting conversation with " + dialogue.name);
         dialogueActive = true;
 
+        // Activating and initialize all dialogue UI
         dialogueBox.SetActive(true);
-
         nameText.text = dialogue.name;
-
         sentences.Clear();
 
         foreach (string sentence in dialogue.sentences)
         {
-            sentences.Enqueue(sentence);
+            sentences.Enqueue(sentence); // Adding all sentences to the queue
         }
 
         DisplayNextSentence();
     }
 
+    // This function is called everytime the user presses E
     public void DisplayNextSentence()
     {
         if (sentences.Count == 0)
         {
-            EndDialogue();
+            EndDialogue(); // If there are no more sentences, end the dialogue
             return;
         }
 
-        StopAllCoroutines();
+        StopAllCoroutines(); // Stop typing last sentence if not finished
         string sentence = sentences.Dequeue();
         StartCoroutine(TypeSentence(sentence));
     }
 
+    // This function is used to type a sentence one letter at a time
     IEnumerator TypeSentence(string sentence)
     {
         dialogueText.text = "";
@@ -60,11 +59,13 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    // This function is called when there are no more sentences to display
     void EndDialogue()
     {
-        Debug.Log("End of conversation.");
+        // Hide dialogue UI
         dialogueBox.SetActive(false);
         dialogueActive = false;
-        FindObjectOfType<NPC>().StartQuest();
+        
+        FindObjectOfType<NPC>().StartQuest(); // Start player quests
     }
 }

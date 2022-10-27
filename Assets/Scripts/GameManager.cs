@@ -52,31 +52,28 @@ public class GameManager : MonoBehaviour
     public void Resume()
     {
         pauseMenu.SetActive(false);
-        AudioListener.pause = false;
-        Time.timeScale = 1f;
+        
+        Unfreeze();
+        
         isPaused = false;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void Pause()
     {
         pauseMenu.SetActive(true);
-        AudioListener.pause = true;
-        Time.timeScale = 0f;
+        
+        Freeze();
+        
         isPaused = true;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
     }
 
     public void GameOver()
     {
         gameOverMenu.SetActive(true);
-        AudioListener.pause = true;
-        Time.timeScale = 0f;
+        
+        Freeze();
+        
         isGameOver = true;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
     }
 
     public void QuitGame()
@@ -92,7 +89,7 @@ public class GameManager : MonoBehaviour
     IEnumerator ShowEndScene()
     {
         SceneManager.LoadScene(3);
-        yield return new WaitForSeconds(11f);
+        yield return new WaitForSeconds(11f); // Wait for the end scene to finish
         MainMenu();
     }
 
@@ -102,14 +99,35 @@ public class GameManager : MonoBehaviour
 
         Destroy(GameObject.Find("Quest Manager"));
 
+        // Hide UI menus
         gameOverMenu.SetActive(false);
         pauseMenu.SetActive(false);
 
-        AudioListener.pause = false;
-        Time.timeScale = 1f;
+        Unfreeze();
+        
         isPaused = false;
         isGameOver = false;
+    }
+
+    void Freeze()
+    {
+        // Freeze game audio and time
+        AudioListener.pause = true;
+        Time.timeScale = 0f;
+
+        // Show the cursor
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    void Unfreeze()
+    {
+        // Unfreeze game audio and time
+        AudioListener.pause = false;
+        Time.timeScale = 1f;
+
+        // Hide the cursor
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }
