@@ -54,6 +54,10 @@ public class GameManager : MonoBehaviour
         pauseMenu.SetActive(false);
         
         Unfreeze();
+
+        // Hide the cursor
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         
         isPaused = false;
     }
@@ -64,6 +68,10 @@ public class GameManager : MonoBehaviour
         
         Freeze();
         
+        // Show the cursor
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        
         isPaused = true;
     }
 
@@ -72,6 +80,10 @@ public class GameManager : MonoBehaviour
         gameOverMenu.SetActive(true);
         
         Freeze();
+
+        // Show the cursor
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         
         isGameOver = true;
     }
@@ -104,6 +116,10 @@ public class GameManager : MonoBehaviour
         pauseMenu.SetActive(false);
 
         Unfreeze();
+
+        // Show the cursor
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         
         isPaused = false;
         isGameOver = false;
@@ -114,10 +130,6 @@ public class GameManager : MonoBehaviour
         // Freeze game audio and time
         AudioListener.pause = true;
         Time.timeScale = 0f;
-
-        // Show the cursor
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
     }
 
     void Unfreeze()
@@ -125,9 +137,5 @@ public class GameManager : MonoBehaviour
         // Unfreeze game audio and time
         AudioListener.pause = false;
         Time.timeScale = 1f;
-
-        // Hide the cursor
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 }
